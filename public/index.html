@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=h1, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" id="inputFile">
+    <button type="button" id="uploadbtn">Upload</button>
+    <br>
+    <br>
+    <textarea id="textarea" cols="30" rows="10"></textarea>
+    <script>
+        const uploadbtn = document.getElementById('uploadbtn')
+        const inputFile = document.getElementById('inputFile')
+        const textarea = document.getElementById('textarea')
+
+        uploadbtn.addEventListener('click', () =>{
+            const formData = new FormData();
+
+            formData.append('pdf', inputFile.files[0])
+
+
+            fetch('/submit', {
+                method: 'POST',
+                // headers: {
+                //     'Content-Type': 'application/json'
+                // },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                textarea.value = data.text;
+            })
+        })
+
+</script>
+</body>
+</html>
